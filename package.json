@@ -14,7 +14,6 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "graphql": "^15.5.1",
     "ityped": "^1.0.3",
-    "node-sass": "^6.0.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.6.1",
     "react-dom": "^16.13.1",
