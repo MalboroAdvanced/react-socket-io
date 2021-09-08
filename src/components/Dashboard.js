@@ -1,7 +1,5 @@
 import React from "react";
 
-function App() {
+export default function Dashboard() {
   return <div>Hello</div>;
 }
-
-export default App;
