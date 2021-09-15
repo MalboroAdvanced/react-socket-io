@@ -4,15 +4,16 @@ import { useConversations } from "../contexts/ConversationsProvider";
 
 export default function OpenConversation() {
   const [text, setText] = useState("");
-  const { sendMessage, selectedConversation } = useConversations();
   const setRef = useCallback((node) => {
     if (node) {
       node.scrollIntoView({ smooth: true });
     }
   }, []);
+  const { sendMessage, selectedConversation } = useConversations();
 
   function handleSubmit(e) {
     e.preventDefault();
+
     sendMessage(
       selectedConversation.recipients.map((r) => r.id),
       text

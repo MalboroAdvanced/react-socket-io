@@ -8,23 +8,23 @@ export default function NewContactModal({ closeModal }) {
   const { createContact } = useContacts();
 
   function handleSubmit(e) {
-    console.log("Hello");
     e.preventDefault();
+
     createContact(idRef.current.value, nameRef.current.value);
     closeModal();
   }
 
   return (
     <>
-      <Modal.Header closeButton>Create A Contact</Modal.Header>
+      <Modal.Header closeButton>Create Contact</Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>ID:=</Form.Label>
+            <Form.Label>Id</Form.Label>
             <Form.Control type="text" ref={idRef} required />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Name:</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control type="text" ref={nameRef} required />
           </Form.Group>
           <Button type="submit">Create</Button>

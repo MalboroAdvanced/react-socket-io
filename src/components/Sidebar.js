@@ -25,7 +25,7 @@ export default function Sidebar({ id }) {
             <Nav.Link eventKey={CONVERSATIONS_KEY}>Conversations</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey={CONTACTS_KEY}>Contats</Nav.Link>
+            <Nav.Link eventKey={CONTACTS_KEY}>Contacts</Nav.Link>
           </Nav.Item>
         </Nav>
         <Tab.Content className="border-right overflow-auto flex-grow-1">
@@ -37,7 +37,7 @@ export default function Sidebar({ id }) {
           </Tab.Pane>
         </Tab.Content>
         <div className="p-2 border-top border-right small">
-          Your ID: <span className="text-muted">{id}</span>
+          Your Id: <span className="text-muted">{id}</span>
         </div>
         <Button onClick={() => setModalOpen(true)} className="rounded-0">
           New {conversationsOpen ? "Conversation" : "Contact"}

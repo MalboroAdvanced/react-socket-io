@@ -14,22 +14,22 @@ export function ConversationsProvider({ id, children }) {
     "conversations",
     []
   );
-  const { contacts } = useContacts();
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
+  const { contacts } = useContacts();
   const socket = useSocket();
 
   function createConversation(recipients) {
-    setConversations((prev) => {
-      return [...prev, { recipients, messages: [] }];
+    setConversations((prevConversations) => {
+      return [...prevConversations, { recipients, messages: [] }];
     });
   }
 
   const addMessageToConversation = useCallback(
     ({ recipients, text, sender }) => {
-      setConversations((prev) => {
+      setConversations((prevConversations) => {
         let madeChange = false;
         const newMessage = { sender, text };
-        const newConversations = prev.map((conversation) => {
+        const newConversations = prevConversations.map((conversation) => {
           if (arrayEquality(conversation.recipients, recipients)) {
             madeChange = true;
             return {
@@ -37,23 +37,23 @@ export function ConversationsProvider({ id, children }) {
               messages: [...conversation.messages, newMessage],
             };
           }
+
           return conversation;
         });
 
         if (madeChange) {
           return newConversations;
         } else {
-          return [...prev, { recipients, messages: [newMessage] }];
+          return [...prevConversations, { recipients, messages: [newMessage] }];
         }
       });
     },
     [setConversations]
   );
 
-  //socket uEffect was defined here
-
   useEffect(() => {
     if (socket == null) return;
+
     socket.on("receive-message", addMessageToConversation);
 
     return () => socket.off("receive-message");
@@ -61,6 +61,7 @@ export function ConversationsProvider({ id, children }) {
 
   function sendMessage(recipients, text) {
     socket.emit("send-message", { recipients, text });
+
     addMessageToConversation({ recipients, text, sender: id });
   }
 
@@ -83,16 +84,15 @@ export function ConversationsProvider({ id, children }) {
     });
 
     const selected = index === selectedConversationIndex;
-
     return { ...conversation, messages, recipients, selected };
   });
 
   const value = {
     conversations: formattedConversations,
-    createConversation,
-    selectConversationIndex: setSelectedConversationIndex,
     selectedConversation: formattedConversations[selectedConversationIndex],
     sendMessage,
+    selectConversationIndex: setSelectedConversationIndex,
+    createConversation,
   };
 
   return (

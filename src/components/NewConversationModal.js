@@ -10,21 +10,23 @@ export default function NewConversationModal({ closeModal }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     createConversation(selectedContactIds);
     closeModal();
   }
 
-  function handleCheckBoxChange(contactId) {
-    setSelectedContactIds((prev) => {
-      if (prev.includes(contactId)) {
-        return prev.filter((prevId) => {
+  function handleCheckboxChange(contactId) {
+    setSelectedContactIds((prevSelectedContactIds) => {
+      if (prevSelectedContactIds.includes(contactId)) {
+        return prevSelectedContactIds.filter((prevId) => {
           return contactId !== prevId;
         });
       } else {
-        return [...prev, contactId];
+        return [...prevSelectedContactIds, contactId];
       }
     });
   }
+
   return (
     <>
       <Modal.Header closeButton>Create Conversation</Modal.Header>
@@ -36,8 +38,8 @@ export default function NewConversationModal({ closeModal }) {
                 type="checkbox"
                 value={selectedContactIds.includes(contact.id)}
                 label={contact.name}
-                onChange={() => handleCheckBoxChange(contact.id)}
-              ></Form.Check>
+                onChange={() => handleCheckboxChange(contact.id)}
+              />
             </Form.Group>
           ))}
           <Button type="submit">Create</Button>
